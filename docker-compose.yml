@@ -1,20 +1,29 @@
-version: '3'
+version: '3.2'
 
 services:
 
   database:
     image: postgres
     container_name: database
+    volumes:
+      - "./data:/var/lib/postgresql/data"
+    env_file:
+      - ./config/.env
 
   web:
     build: .
     image: django
     container_name: web
-
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: ./bin/start_django.sh
     volumes:
-      - ./src:/code
+      - "./src:/src"
     ports:
       - "8000:8000"
     depends_on:
       - database
+    env_file:
+      - ./config/.env
+
+volumes:
+  data:
+  app:

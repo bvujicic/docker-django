@@ -2,12 +2,17 @@ FROM python:3.6
 
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /code
+RUN apt-get update && apt-get install -y \
+  gettext
 
-WORKDIR /code
+RUN mkdir /src
 
-ADD requirements.txt /code/
+WORKDIR /src
+
+ADD requirements.txt /src/
 
 RUN pip install -r requirements.txt
 
-ADD . /code/
+ADD . /src/
+
+#RUN python3 src/manage.py migrate
