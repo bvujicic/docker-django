@@ -1,3 +1,5 @@
 .idea/
+data/
 
 .env
+app/dockerexample/__pycache__/

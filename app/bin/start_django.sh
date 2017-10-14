@@ -13,4 +13,5 @@ python3 /src/manage.py makemessages
 #echo "Django setup, executing: collectstatic"
 #python3 /src/manage.py collectstatic --noinput -v 3
 
-python3 /src/manage.py runserver localhost:8000
+#python3 /src/manage.py runserver 0.0.0.0:8000
+gunicorn dockerexample.wsgi:application -c /src/gunicorn.conf.py

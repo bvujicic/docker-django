@@ -6,21 +6,34 @@ services:
     image: postgres
     container_name: database
     volumes:
-      - "./data:/var/lib/postgresql/data"
+      - "./data/database:/var/lib/postgresql/data"
     env_file:
       - ./config/.env
 
+  redis:
+    image: redis
+    container_name: cache
+    build:
+      context: .
+      dockerfile: Dockerfile-Redis
+    volumes:
+      - "./data/redis:/data"
+
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-Django
     image: django
     container_name: web
     command: ./bin/start_django.sh
     volumes:
-      - "./src:/src"
+      - "./app:/src"
+      - "./data/log:/log"
     ports:
       - "8000:8000"
     depends_on:
       - database
+      - redis
     env_file:
       - ./config/.env
 
