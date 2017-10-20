@@ -15,5 +15,4 @@ USER ${APP_USER}
 ADD ./src/ ${APP_ROOT}
 WORKDIR ${APP_ROOT}/${PROJECT_NAME}
 
-CMD celery -A ${PROJECT_NAME} worker
-#CMD pwd
+ENTRYPOINT celery -A ${PROJECT_NAME} worker
