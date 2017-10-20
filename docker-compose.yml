@@ -50,11 +50,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-Celery
-    volumes:
-      - "./src:/src"
     depends_on:
+      - django
       - postgres
       - redis
+    env_file:
+      - ./config/.env
 
   django:
     build:

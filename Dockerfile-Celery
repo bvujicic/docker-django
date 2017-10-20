@@ -8,12 +8,12 @@ ENV APP_ROOT /src
 
 RUN groupadd -r ${APP_USER} && useradd -r -m --home-dir ${APP_ROOT} -s /usr/sbin/nologin -g ${APP_USER} ${APP_USER}
 
-WORKDIR ${APP_ROOT}
-RUN mkdir /config
-ADD requirements.txt /config/
-RUN pip install -r /config/requirements.txt
+ADD requirements.txt ${APP_ROOT}
+RUN pip install -r ${APP_ROOT}/requirements.txt
 
 USER ${APP_USER}
-ADD . ${APP_ROOT}
+ADD ./src/ ${APP_ROOT}
+WORKDIR ${APP_ROOT}/${PROJECT_NAME}
 
-ENTRYPOINT celery -A ${PROJECT_NAME} worker
+CMD celery -A ${PROJECT_NAME} worker
+#CMD pwd
