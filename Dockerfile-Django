@@ -1,16 +1,13 @@
 FROM python:3.6
 
 ENV PYTHONUNBUFFERED 1
+ENV APP_ROOT /src
 
-RUN apt-get update && apt-get install -y \
-  gettext
-
-RUN mkdir /src
-
-WORKDIR /src
-
-ADD requirements.txt /src/
-
+RUN apt-get update && apt-get install -y gettext
+RUN mkdir ${APP_ROOT}
+WORKDIR ${APP_ROOT}
+ADD requirements.txt ${APP_ROOT}
 RUN pip install -r requirements.txt
+ADD ./src/ ${APP_ROOT}
 
-ADD ./app/ /src/
+ENTRYPOINT ["./bin/start_django.sh"]

@@ -3,4 +3,4 @@ data/
 log/
 
 .env
-app/dockerexample/__pycache__/
+*.pyc
